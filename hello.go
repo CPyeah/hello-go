@@ -10,6 +10,8 @@ func main() {
 	sayHello()                  // in current file
 	speakHello()                // in current package
 	note.SayHello()             // in other package
+
+	fmt.Println()
 }
 
 func sayHello() {
