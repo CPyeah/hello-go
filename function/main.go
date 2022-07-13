@@ -16,7 +16,7 @@ func main() {
 
 	getFunction()()
 
-	ImmediateInvoke()
+	immediateInvoke()
 }
 
 func add(a int, b int) int {
@@ -48,7 +48,7 @@ func getFunction() func() {
 	}
 }
 
-func ImmediateInvoke() {
+func immediateInvoke() {
 	func() {
 		fmt.Println("Immediate invoke function")
 	}()
