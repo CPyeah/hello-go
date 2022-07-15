@@ -3,12 +3,33 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 func main() {
 	fmtConvert()
 
 	stringConvert()
+
+	stringOperation()
+}
+
+func stringOperation() {
+	println(strings.Contains("hello world", " "))
+	println(strings.Count("hello world", " "))
+	println(strings.Index("hello world", " "))
+
+	println(strings.Replace("hello world", " ", "_", 1))
+	println(strings.ReplaceAll("hello world", " ", "_"))
+
+	println(strings.Repeat("ha", 2))
+
+	println(strings.EqualFold("ABC", "abc"))
+
+	fmt.Println(strings.Fields("a b \b c\nd\t"))
+	fmt.Println(strings.Split("abc", ""))
+
+	println(strings.TrimSpace("   asdf  \n  "))
 }
 
 func stringConvert() {
