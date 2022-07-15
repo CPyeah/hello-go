@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"unicode/utf8"
 )
 
 func main() {
@@ -12,6 +13,15 @@ func main() {
 	stringConvert()
 
 	stringOperation()
+
+	utf8Operation()
+}
+
+func utf8Operation() {
+	println(utf8.RuneCountInString("hi世界😄"))
+
+	var s = "你好"[:1]
+	println(utf8.ValidString(s))
 }
 
 func stringOperation() {
