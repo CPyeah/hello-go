@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"hello-go/initFunction/otherPackage"
+	"hello-go/grammar/initFunction/otherPackage"
 )
 
 func init() {

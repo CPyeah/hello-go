@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"hello-go/note"
+	"hello-go/grammar/note"
 )
 
 func main() {
