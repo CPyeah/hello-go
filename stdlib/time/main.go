@@ -7,6 +7,21 @@ import (
 
 func main() {
 	durationOperation()
+	locationOperation()
+}
+
+func locationOperation() {
+	var l, err = time.LoadLocation("Local")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(l)
+
+	l, err = time.LoadLocation("Asia/Shanghai")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(l)
 }
 
 func durationOperation() {
