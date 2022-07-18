@@ -1,0 +1,14 @@
+INFO: 2022/07/17 14:51:18 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:21: this is a info
+WARN: 2022/07/17 14:51:18 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:23: this is a panic
+INFO: 2022/07/17 14:51:18 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:17: recover: this is a panic
+
+ERROR: 2022/07/17 14:51:18 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:19: this is a big error
+INFO: 2022/07/17 14:54:40 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:20: this is a info
+WARN: 2022/07/17 14:54:40 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:22: this is a panic
+ERROR: 2022/07/17 14:54:40 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:18: this is a big error
+INFO: 2022/07/17 14:58:02 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:24: this is a info
+WARN: 2022/07/17 14:58:02 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:26: this is a panic
+ERROR: 2022/07/17 14:58:02 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:21: this is a big error
+INFO: 2022/07/17 14:59:03 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:25: this is a info
+WARN: 2022/07/17 14:59:03 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:27: this is a panic
+ERROR: 2022/07/17 14:59:03 /Users/chengpeng/go-projects/hello-go/stdlib/errorAndLog/main.go:22: this is a big error
