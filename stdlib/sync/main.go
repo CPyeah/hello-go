@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -11,6 +12,29 @@ func main() {
 	condition()
 	once()
 	syncMap()
+	atomicOperation()
+}
+
+func atomicOperation() {
+	var count int64 = 0
+	var wg sync.WaitGroup
+	wg.Add(2000)
+	for i := 0; i < 1000; i++ {
+		go func() {
+			//count++
+			atomic.AddInt64(&count, 1)
+			wg.Done()
+		}()
+	}
+	for i := 0; i < 1000; i++ {
+		go func() {
+			//count--
+			atomic.AddInt64(&count, -1)
+			wg.Done()
+		}()
+	}
+	wg.Wait()
+	fmt.Println("result count is", count)
 }
 
 func syncMap() {
@@ -22,8 +46,8 @@ func syncMap() {
 
 	fmt.Println(syncMap.Load("k1"))
 	fmt.Println(syncMap.LoadAndDelete("k4"))
-	syncMap.LoadOrStore("k5", "v5")
-	syncMap.LoadOrStore("k5", "v6")
+	fmt.Println(syncMap.LoadOrStore("k5", "v5"))
+	fmt.Println(syncMap.LoadOrStore("k5", "v6"))
 
 	syncMap.Range(func(key, value interface{}) bool {
 		fmt.Println(key, "=", value)
