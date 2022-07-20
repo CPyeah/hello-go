@@ -56,3 +56,32 @@ func insertionSort(nums []int) []int {
 	}
 	return nums
 }
+
+func quickSort(nums []int) []int {
+	if len(nums) < 2 {
+		return nums
+	}
+	quickSortFunc(nums, 0, len(nums)-1)
+	return nums
+}
+
+func quickSortFunc(nums []int, leftIndex int, rightIndex int) {
+	if leftIndex < rightIndex {
+		var pivotIndex = division(nums, leftIndex, rightIndex)
+		quickSortFunc(nums, leftIndex, pivotIndex-1)
+		quickSortFunc(nums, pivotIndex+1, rightIndex)
+	}
+}
+
+func division(nums []int, leftIndex int, rightIndex int) int {
+	var pivot = nums[rightIndex]
+	var pivotIndex = leftIndex
+	for i := leftIndex; i < rightIndex; i++ {
+		if nums[i] < pivot {
+			Swap(nums, i, pivotIndex)
+			pivotIndex++
+		}
+	}
+	Swap(nums, pivotIndex, rightIndex)
+	return pivotIndex
+}

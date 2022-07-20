@@ -64,3 +64,23 @@ func Test_insertionSort(t *testing.T) {
 		})
 	}
 }
+
+func Test_quickSort(t *testing.T) {
+	type args struct {
+		nums []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{"quick-test", args{[]int{4, 3, 2, 5, 6, 1, 7}}, []int{1, 2, 3, 4, 5, 6, 7}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := quickSort(tt.args.nums); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("quickSort() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
