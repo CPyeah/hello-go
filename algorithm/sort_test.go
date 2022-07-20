@@ -44,3 +44,23 @@ func Test_selectionSort(t *testing.T) {
 		})
 	}
 }
+
+func Test_insertionSort(t *testing.T) {
+	type args struct {
+		nums []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{"insertion-test", args{[]int{4, 3, 2, 5, 6, 1, 7}}, []int{1, 2, 3, 4, 5, 6, 7}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := insertionSort(tt.args.nums); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("insertionSort() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

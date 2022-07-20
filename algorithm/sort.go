@@ -37,3 +37,22 @@ func selectionSort(nums []int) []int {
 	return nums
 
 }
+
+func insertionSort(nums []int) []int {
+	if len(nums) < 2 {
+		return nums
+	}
+	for i := 1; i < len(nums); i++ {
+		var currentValue = nums[i]
+		var insertIndex = i - 1
+		for ; insertIndex >= 0 && currentValue < nums[insertIndex]; insertIndex-- {
+			// move backward
+			nums[insertIndex+1] = nums[insertIndex]
+		}
+		// insert element
+		if insertIndex != i-1 {
+			nums[insertIndex+1] = currentValue
+		}
+	}
+	return nums
+}
