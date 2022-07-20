@@ -21,13 +21,17 @@ func selectionSort(nums []int) []int {
 		return nums
 	}
 	for i := 0; i < len(nums)-1; i++ {
-		var index = len(nums) - 1 - i
-		var maxValue = nums[index]
-		for j := 0; j < index; j++ {
+		var lastIndex = len(nums) - 1 - i
+		var maxValue = nums[lastIndex]
+		var maxIndex = lastIndex
+		for j := 0; j < lastIndex; j++ {
 			if nums[j] > maxValue {
 				maxValue = nums[j]
-				Swap(nums, index, j)
+				maxIndex = j
 			}
+		}
+		if maxIndex != lastIndex {
+			Swap(nums, maxIndex, lastIndex)
 		}
 	}
 	return nums
