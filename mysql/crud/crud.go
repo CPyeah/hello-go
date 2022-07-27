@@ -12,16 +12,12 @@ const (
 	password = "oracle"
 )
 
-var mysql *sql.DB
+var db *sql.DB
 
 func init() {
 	var linkUrl = fmt.Sprintf("%s:%s@tcp(%s)/delivery_index?charset=utf8&parseTime=True", user, password, url)
-	var db, err = sql.Open("mysql", linkUrl)
-	if err != nil {
-		panic(err)
-	}
-	mysql = db
-	fmt.Println("mysql database connect success.")
+	db, _ = sql.Open("mysql", linkUrl)
+	fmt.Println("db database connect success.")
 }
 
 func main() {
@@ -45,7 +41,7 @@ func main() {
 }
 
 func transaction() {
-	var tx, err = mysql.Begin()
+	var tx, err = db.Begin()
 	if err != nil {
 		panic(err)
 	}
@@ -60,7 +56,7 @@ func transaction() {
 }
 
 func deleteByName(name string) {
-	var result, err = mysql.Exec("delete from customer where name = ?", name)
+	var result, err = db.Exec("delete from customer where name = ?", name)
 	if err != nil {
 		panic(err)
 	}
@@ -69,7 +65,7 @@ func deleteByName(name string) {
 }
 
 func updateCustomer(id int64, newName string) {
-	var result, err = mysql.Exec("update customer set name = ? where id = ?", newName, id)
+	var result, err = db.Exec("update customer set name = ? where id = ?", newName, id)
 	if err != nil {
 		panic(err)
 	}
@@ -78,7 +74,7 @@ func updateCustomer(id int64, newName string) {
 }
 
 func insertCustomer(name string) int64 {
-	result, err := mysql.Exec("insert into customer values (null, ?)", name)
+	result, err := db.Exec("insert into customer values (null, ?)", name)
 	if err != nil {
 		panic(err)
 	}
@@ -89,7 +85,7 @@ func insertCustomer(name string) int64 {
 }
 
 func queryCustomers() {
-	var rows, err = mysql.Query("select * from customer limit 10")
+	var rows, err = db.Query("select * from customer limit 10")
 	if err != nil {
 		panic(err)
 	}
@@ -103,7 +99,7 @@ func queryCustomers() {
 }
 
 func queryCustomerById(id int64) {
-	var row = mysql.QueryRow("select * from customer where id = ?", id)
+	var row = db.QueryRow("select * from customer where id = ?", id)
 	var customer customer
 	var err = row.Scan(&customer.id, &customer.name)
 	if err == sql.ErrNoRows {
@@ -120,8 +116,8 @@ func closeMySQL() {
 	func(mysql *sql.DB) {
 		err := mysql.Close()
 		if err != nil {
-			fmt.Println("mysql close error.")
+			fmt.Println("db close error.")
 		}
-		fmt.Println("mysql closed.")
-	}(mysql)
+		fmt.Println("db closed.")
+	}(db)
 }
