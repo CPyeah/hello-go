@@ -36,12 +36,80 @@ func init() {
 
 }
 
+// doc: https://gorm.io/
 func main() {
 
 	createUserTable()
 
 	user := createUser()
 	fmt.Println(user)
+
+	user = updateUser(user)
+
+	var allUser []User
+	OrmDB.Find(&allUser)
+	fmt.Println(allUser)
+
+	selectSmall()
+
+	selectWhere()
+
+	count()
+
+	deleteById(user.ID)
+
+	count()
+
+	nativeSql()
+
+}
+
+func nativeSql() {
+	type result struct {
+		Id   uint
+		Name string
+		Age  uint8
+	}
+	var s = "select id, name, age from users where name = ?"
+	var results []result
+	OrmDB.Raw(s, "tom").Scan(&results)
+	fmt.Println("results is", results)
+}
+
+func deleteById(id uint) {
+	OrmDB.Delete(&User{}, id)
+}
+
+func count() {
+	var count int64
+	OrmDB.Model(&User{}).Count(&count)
+	fmt.Println("count is", count)
+}
+
+func selectWhere() {
+	var users []User
+	OrmDB.Where("name = ?", "tom").Order("id desc").Limit(3).Find(&users)
+	fmt.Println(users)
+}
+
+func selectSmall() {
+	type UserAPI struct {
+		ID   uint
+		Name string
+	}
+	var userAPIs []UserAPI
+	OrmDB.Model(&User{}).Limit(10).Find(&userAPIs)
+	fmt.Println(userAPIs)
+}
+
+func updateUser(user *User) *User {
+	user.Name = "jerry"
+	user.Age = 2
+	e := "jerry@m.com"
+	user.Email = &e
+	OrmDB.Save(user)
+
+	return user
 }
 
 func createUserTable() {
