@@ -62,6 +62,39 @@ func main() {
 
 	nativeSql()
 
+	many2many()
+
+}
+
+func many2many() {
+	// add
+	var english = Language{
+		Name: "English",
+	}
+	var chinese = Language{
+		Name: "Chinese",
+	}
+	var user = User{
+		Name:         "tommy",
+		MemberNumber: sql.NullString{String: "110", Valid: true},
+		ActivatedAt:  sql.NullTime{Time: time.Now(), Valid: true},
+		Languages:    []*Language{&english, &chinese},
+	}
+	OrmDB.Create(&user)
+
+	// query
+	var result User
+	OrmDB.Where("id = ?", 17).First(&result)
+	var languages []*Language
+	err := OrmDB.Model(&result).Association("Languages").Find(&languages)
+	if err != nil {
+		panic(err)
+	}
+	result.Languages = languages
+	fmt.Println("added user is", result)
+	for _, language := range languages {
+		fmt.Println(language.Name)
+	}
 }
 
 func nativeSql() {

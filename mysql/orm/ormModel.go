@@ -17,4 +17,13 @@ type User struct {
 	CreatedAt    time.Time      `gorm:"autoCreateTime"`
 	UpdatedAt    time.Time      `gorm:"autoUpdateTime:milli"`
 	DeleteAt     gorm.DeletedAt `gorm:"index"`
+
+	Languages []*Language `gorm:"many2many:user_languages;"`
+}
+
+type Language struct {
+	gorm.Model
+	Name string
+
+	Users []*User `gorm:"many2many:user_languages;"`
 }
