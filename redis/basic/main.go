@@ -22,6 +22,23 @@ func main() {
 
 	listOperation()
 
+	hashOperation()
+
+}
+
+func hashOperation() {
+	var hashKey = "go-Hash"
+	Rdb.HSet(Ctx, hashKey, "key1", "value1", "key2", "value2")
+	var count = Rdb.HLen(Ctx, hashKey).Val()
+	fmt.Println(hashKey, "has", count, "key-value paris.")
+
+	value2 := Rdb.HGet(Ctx, hashKey, "key2").Val()
+	fmt.Println("key2 's value is", value2)
+
+	Rdb.HDel(Ctx, hashKey, "key1")
+
+	values := Rdb.HGetAll(Ctx, hashKey).Val()
+	fmt.Println(values)
 }
 
 func listOperation() {
