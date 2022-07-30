@@ -24,6 +24,31 @@ func main() {
 
 	hashOperation()
 
+	setOperation()
+
+	sortedSetOperation()
+
+}
+
+func sortedSetOperation() {
+	var zsetKey = "go-ZSet"
+	Rdb.ZAdd(Ctx, zsetKey, redis.Z{Member: "Tom", Score: 7}, redis.Z{Member: "Jerry", Score: 3})
+	count := Rdb.ZCard(Ctx, zsetKey).Val()
+	members := Rdb.ZRandMember(Ctx, zsetKey, int(count)).Val()
+	fmt.Println("members is", members)
+
+	s := Rdb.ZScore(Ctx, zsetKey, "Tom").Val()
+	fmt.Println("Tom's age is", s)
+}
+
+func setOperation() {
+	var setKey = "go-Set"
+	Rdb.SAdd(Ctx, setKey, "Tom", "Jerry", "Tom", "Tommy")
+	Rdb.SRem(Ctx, setKey, "Tommy")
+	count := Rdb.SCard(Ctx, setKey).Val()
+	fmt.Println(setKey, "has", count, "elements.")
+	members := Rdb.SMembers(Ctx, setKey).Val()
+	fmt.Println(members)
 }
 
 func hashOperation() {
