@@ -20,6 +20,26 @@ func main() {
 
 	stringOperation()
 
+	listOperation()
+
+}
+
+func listOperation() {
+	var key = "go-List"
+	count, err := Rdb.RPush(Ctx, key, "Tom", "Jerry").Result()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(key, "has", count, "elements.")
+
+	count = Rdb.LLen(Ctx, key).Val()
+	fmt.Println(key, "has", count, "elements.")
+
+	items, _ := Rdb.RPopCount(Ctx, key, 1).Result()
+	fmt.Println(items)
+
+	t := Rdb.LRem(Ctx, key, 1, "Tom").Val()
+	fmt.Println("removed", t, "items.")
 }
 
 func stringOperation() {
