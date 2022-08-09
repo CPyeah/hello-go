@@ -4,6 +4,7 @@
 - scan key
 - lock
 - queue
+- sub/pub
 - bitmap and bloom filter
 - hyperloglog
 - goe hash
