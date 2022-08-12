@@ -61,6 +61,8 @@ func init() {
 	hospitalNameMap["淮安市淮安医院"] = ""
 	hospitalNameMap["南通和美家妇产科医院"] = ""
 	hospitalNameMap["锡山人民医院"] = "无锡市锡山人民医院"
+	hospitalNameMap["江苏省宝应县妇幼保健院"] = "宝应县妇幼保健院"
+	hospitalNameMap["无锡市惠山区第二人民医院"] = ""
 
 	monthMap = make(map[int]string)
 	monthMap[1] = "C"
@@ -85,6 +87,8 @@ func main() {
 
 	// loop data excel
 	write2DataExcel(monthHospitalList)
+
+	fmt.Println("finish")
 }
 
 func write2DataExcel(monthHospitalList []counterHospital) {
@@ -106,10 +110,12 @@ func write2DataExcel(monthHospitalList []counterHospital) {
 
 	for i, row := range rows {
 		formalName := row[0]
+		var sendName = ""
 		for _, hospital := range monthHospitalList {
 			if formalName == hospital.formalName {
 				m, ok := monthMap[hospital.month]
 				if !ok {
+					fmt.Println("is hasn't month", hospital)
 					continue
 				}
 				axis := m + strconv.Itoa(i+1)
@@ -117,7 +123,25 @@ func write2DataExcel(monthHospitalList []counterHospital) {
 				if err != nil {
 					panic(err)
 				}
+
+				// fill hospital send name
+				if !hospital.isSameName {
+					if len(sendName) > 0 {
+						if !strings.Contains(sendName, hospital.name) {
+							sendName = sendName + "; \n" + hospital.name
+						}
+					} else {
+						sendName = hospital.name
+					}
+
+				}
 			}
+		}
+
+		axis := "B" + strconv.Itoa(i+1)
+		err = f.SetCellValue("Sheet1", axis, sendName)
+		if err != nil {
+			panic(err)
 		}
 	}
 
