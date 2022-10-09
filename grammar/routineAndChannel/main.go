@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"sync"
 	"time"
@@ -9,6 +10,8 @@ import (
 var lock = sync.Mutex{}
 
 func main() {
+	test()
+
 	normalInvoke()
 
 	goroutine()
@@ -142,4 +145,52 @@ func primeNum(num int, count *int) {
 	lock.Lock()
 	*count++
 	lock.Unlock()
+}
+
+func test() {
+
+	// wait group
+	var wg sync.WaitGroup
+	wg.Add(2)
+
+	// channel
+	var c = make(chan string)
+
+	// context
+	ctx, cancel := context.WithCancel(context.Background())
+
+	go doWork1(&wg, &c, ctx)
+	go doWork2(&wg, &c, ctx)
+
+	time.Sleep(5 * time.Second)
+	// 中断
+	cancel()
+
+	wg.Wait()
+	fmt.Println("END")
+}
+
+func doWork2(wg *sync.WaitGroup, c *chan string, ctx context.Context) {
+	defer wg.Done()
+	m := <-*c
+	fmt.Println("WORK-2")
+	fmt.Println(m)
+}
+
+func doWork1(wg *sync.WaitGroup, c *chan string, ctx context.Context) {
+	defer wg.Done()
+	fmt.Println("WORK-1")
+	*c <- "test message"
+
+	for i := 0; i < 100; i++ {
+		time.Sleep(time.Second)
+		fmt.Println("WORK-1", i)
+		select {
+		case <-ctx.Done():
+			fmt.Println("WORK-1 DONE")
+			return
+		default:
+
+		}
+	}
 }

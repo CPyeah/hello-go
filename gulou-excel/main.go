@@ -31,6 +31,7 @@ func init() {
 	var data, _ = os.ReadFile(path)
 	hospitalList = strings.Split(string(data), "\n")
 
+	// sendHospitalName -> formalHospitalName
 	hospitalNameMap = make(map[string]string)
 	hospitalNameMap["江苏省中医院（ 紫东院区）"] = ""
 	hospitalNameMap["江苏省中医院紫东院区"] = ""
@@ -57,7 +58,7 @@ func init() {
 	hospitalNameMap["江苏省溧阳市妇幼保健院"] = "溧阳市妇幼保健院"
 	hospitalNameMap["连云港市赣榆区中医院"] = ""
 	hospitalNameMap["南京市浦口区中医院"] = "浦口区中医院"
-	hospitalNameMap["{淮安市淮安区妇幼保健院"] = "江苏省淮安市淮安区妇幼保健院"
+	hospitalNameMap["淮安市淮安区妇幼保健院"] = "江苏省淮安市淮安区妇幼保健院"
 	hospitalNameMap["淮安市淮安医院"] = ""
 	hospitalNameMap["南通和美家妇产科医院"] = ""
 	hospitalNameMap["锡山人民医院"] = "无锡市锡山人民医院"
